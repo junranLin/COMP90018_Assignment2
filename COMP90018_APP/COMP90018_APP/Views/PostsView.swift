@@ -146,9 +146,12 @@ struct PostsView: View {
         .onChange(of: sortOrder, perform: { newValue in
             sortPosts()
         })
+        .onChange(of: postsViewModel.updateCount, perform: { value in
+            sortPosts()
+        })
         .refreshable {
             // Refresh code
-            sortPosts()
+            processUserInput()
         }
         .onAppear {
             searchCategory = shakeResult

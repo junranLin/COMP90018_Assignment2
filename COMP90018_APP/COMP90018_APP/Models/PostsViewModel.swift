@@ -13,6 +13,8 @@ class PostsViewModel: PostCollectionModel {
     static let DEFAULT_POST_COUNT = 100
     static let MAX_IMAGE_SIZE: Int = 20 * 1024 * 1024
     
+    @Published var updateCount = 0
+    
     /**
      Fetch all posts and order them by timestamps descendingly
      */
@@ -32,6 +34,7 @@ class PostsViewModel: PostCollectionModel {
                     newPosts.append(post)
                 }
                 self.posts = newPosts
+                self.updateCount += 1
             }
     }
     
@@ -54,6 +57,7 @@ class PostsViewModel: PostCollectionModel {
                 self.posts = newPosts.filter { post in
                     post.tags.contains { $0.fuzzyMatch(searchCategory) }
                 }
+                self.updateCount += 1
             }
         
         
@@ -81,6 +85,7 @@ class PostsViewModel: PostCollectionModel {
                 self.posts = newPosts.filter { post in
                     post.postTitle.fuzzyMatch(searchText) || post.content.fuzzyMatch(searchText)
                 }
+                self.updateCount += 1
             }
     }
     
@@ -106,6 +111,7 @@ class PostsViewModel: PostCollectionModel {
                 self.posts = newPosts.filter { post in
                     post.userName.fuzzyMatch(searchUsername)
                 }
+                self.updateCount += 1
             }
     }
 
@@ -130,7 +136,8 @@ class PostsViewModel: PostCollectionModel {
                 }
                 newPosts.sort { $0.timestamp > $1.timestamp }
                 self.posts = newPosts
-                print(self.posts)
+                self.updateCount += 1
+                //print(self.posts)
             }
     }
     
@@ -154,6 +161,7 @@ class PostsViewModel: PostCollectionModel {
                     newPosts.append(post)
                 }
                 self.posts = newPosts
+                self.updateCount += 1
             }
     }
     
